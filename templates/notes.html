@@ -11,15 +11,16 @@
       margin: 0;
       padding: 20px;
     }
-    h2 {
-      text-align: center;
-      color: #ffffff;
-      margin-bottom: 10px;
+    img.logo {
+      display: block;
+      margin: 0 auto 10px;
+      width: 100px;
     }
     .top-bar {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
+      margin-bottom: 10px;
     }
     .insight-button {
       background-color: #773dbd;
@@ -34,6 +35,11 @@
     .insight-button:hover {
       background-color: #8a2be2;
       transform: scale(1.05);
+    }
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      margin-top: 0;
     }
     #notes_container {
       display: flex;
@@ -75,12 +81,19 @@
   </style>
 </head>
 <body>
+
+  <!-- Centered logo -->
+  <img src="/static/logo.png" alt="Logo" class="logo">
+
+  <!-- Top bar with insights button -->
   <div class="top-bar">
-    <img src="/static/logo.png" alt="Logo" style="width: 100px;">
     <button class="insight-button" onclick="getInsights()">Get Insights</button>
   </div>
+
+  <!-- Heading -->
   <h2>Welcome {{ username }} from {{ company }}</h2>
 
+  <!-- Notes -->
   <div id="notes_container"></div>
 
 <script>
@@ -132,8 +145,7 @@
 
   function getInsights() {
     alert("🧠 Insights feature coming soon!");
-    // You can replace this alert with a real fetch call later.
-    // Example: window.location.href = "/insights";
+    // You can replace this with real fetch or redirect later
   }
 </script>
 </body>
