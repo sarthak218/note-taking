@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <title>Notes</title>
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #ffffff;
+    }
+    #notes_container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .note-box {
+      flex: 1 0 calc(50% - 10px);
+      border: 1px solid #773dbd;
+      background-color: #2e2e3e;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    textarea {
+      width: 100%;
+      background-color: #1e1e2f;
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      resize: vertical;
+      font-size: 14px;
+    }
+    button, input[type="submit"] {
+      background-color: #773dbd;
+      color: #ffffff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    button:hover, input[type="submit"]:hover {
+      background-color: #8a2be2;
+    }
+  </style>
+</head>
+<body>
+  <img src="/static/logo.png" alt="Logo" style="width: 100px; display: block; margin: 0 auto 20px;">
+  <h2>Welcome {{ username }} from {{ company }}</h2>
+  <div id="notes_container"></div>
+
+<script>
+  const currentUser = "{{ username }}";
+  const socket = io();
+
+  socket.emit("register_user", { user: currentUser, company: "{{ company }}" });
+
+  let currentNotes = {};
+
+  socket.on("update_notes", function(data) {
+    const container = document.getElementById("notes_container");
+
+    Object.keys(data).forEach(user => {
+      const noteId = "note_" + user;
+      const isCurrent = user === currentUser;
+      let noteBox = document.getElementById(noteId);
+
+      if (!noteBox) {
+        const div = document.createElement("div");
+        div.className = "note-box";
+        div.innerHTML = `
+          <h3>${user} (${data[user].company})</h3>
+          ${isCurrent
+            ? `<textarea id="${noteId}" rows="10">${data[user].note}</textarea>
+               <form method="GET" action="/download/${user}">
+                 <input type="submit" value="Download Note">
+               </form>`
+            : `<textarea id="${noteId}" rows="10" disabled>${data[user].note}</textarea>`
+          }
+        `;
+        container.appendChild(div);
+
+        if (isCurrent) {
+          const myText = document.getElementById(noteId);
+          myText.addEventListener("input", function () {
+            socket.emit("note_update", { user: currentUser, note: this.value });
+          });
+        }
+      } else {
+        if (document.activeElement !== noteBox) {
+          noteBox.value = data[user].note;
+        }
+      }
+    });
+
+    currentNotes = data;
+  });
+</script>
+</body>
+</html>

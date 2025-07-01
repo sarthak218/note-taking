@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title>Note Taking</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background-color: #2e2e3e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(119, 61, 189, 0.5);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      font-size: 14px;
+      color: #bbbbbb;
+    }
+    input[type="text"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    input[type="text"] {
+      background-color: #1e1e2f;
+      color: #ffffff;
+    }
+    input[type="submit"] {
+      background-color: #773dbd;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #8a2be2;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <img src="/static/logo.png" alt="Logo" style="width: 120px; margin-bottom: 20px;">
+    <h2>Note Taking</h2>
+    <form method="POST">
+      <label for="username">Enter your Username</label>
+      <input type="text" id="username" name="username" placeholder="Username" required>
+
+      <label for="company">Enter your Company</label>
+      <input type="text" id="company" name="company" placeholder="Company" required>
+
+      <input type="submit" value="Enter">
+    </form>
+  </div>
+</body>
+</html>
